@@ -1,25 +1,20 @@
 package hu.futureofmedia.task.contactsapi.entities;
 
-
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDateTime;
-import java.util.UUID;
+
 
 @Entity
 public class Contact {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator"
-    )
-    @Column(updatable = false, nullable = false)
-    private UUID id;
+    @GeneratedValue
+    @Column(updatable = false, nullable = false, unique = true)
+    private Long id;
+    @Column(name="lastname")
     private String lastName;
     private String firstName;
     @Email(message = "Email is not valid", regexp = "(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|" +
@@ -32,7 +27,7 @@ public class Contact {
 
     private String phoneNumber;
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "company_id", referencedColumnName = "UUID")
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
     private String comment;
     @Enumerated(EnumType.STRING)
@@ -45,7 +40,7 @@ public class Contact {
     public Contact() {
     }
 
-    public Contact(UUID id,
+    public Contact(Long id,
                    String lastName,
                    String firstName,
                    String email,
@@ -67,7 +62,7 @@ public class Contact {
         this.lastModification = lastModification;
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 

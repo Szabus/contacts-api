@@ -10,8 +10,6 @@ public class Company {
     private Long id;
     private String name;
 
-    @OneToOne(mappedBy = "contact")
-    private Contact contact;
 
     public Long getId() {
         return id;
@@ -20,4 +18,5 @@ public class Company {
     public String getName() {
         return name;
     }
+
 }
