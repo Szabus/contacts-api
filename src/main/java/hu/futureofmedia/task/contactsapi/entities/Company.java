@@ -2,7 +2,6 @@ package hu.futureofmedia.task.contactsapi.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 @Entity
 public class Company {
