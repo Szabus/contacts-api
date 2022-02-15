@@ -37,3 +37,6 @@ jDBC connection string: `jdbc:postgresql://localhost:15432/contactsapi`
 Felhasználónév: `contactsapi`  
 Jelszó: `contactsapi`  
 Adatbázis: `contactsapi`
+
+End point dokumentáció
+https://documenter.getpostman.com/view/18091844/UVkgxef2
