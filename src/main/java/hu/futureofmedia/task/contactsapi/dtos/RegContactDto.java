@@ -1,12 +1,13 @@
 package hu.futureofmedia.task.contactsapi.dtos;
 
+import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 
 public class RegContactDto {
 
     private String lastName;
     private String firstName;
-    private String CompanyName;
+    private Company companyName;
     private String email;
     private String phoneNumber;
     private String comment;
@@ -14,13 +15,13 @@ public class RegContactDto {
 
     public RegContactDto(String lastName,
                           String firstName,
-                          String companyName,
+                          Company companyName,
                           String email,
                           String phoneNumber,
                           String comment) {
         this.lastName = lastName;
         this.firstName = firstName;
-        CompanyName = companyName;
+        this.companyName = companyName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.comment = comment;
@@ -42,12 +43,12 @@ public class RegContactDto {
         this.firstName = firstName;
     }
 
-    public String getCompanyName() {
-        return CompanyName;
+    public Company getCompanyName() {
+        return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+    public void setCompanyName(Company companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {
@@ -78,7 +79,7 @@ public class RegContactDto {
     public RegContactDto(Contact contact) {
         this(contact.getLastName(),
                 contact.getFirstName(),
-                contact.getCompany().getName(),
+                contact.getCompany(),
                 contact.getEmail(),
                 contact.getPhoneNumber(),
                 contact.getComment());

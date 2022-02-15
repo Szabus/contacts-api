@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.dtos;
 
+import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 
 import java.time.LocalDateTime;
@@ -8,7 +9,7 @@ public class ReadContactDto {
 
     private String lastName;
     private String firstName;
-    private String CompanyName;
+    private Company companyName;
     private String email;
     private String phoneNumber;
     private String comment;
@@ -17,7 +18,7 @@ public class ReadContactDto {
 
     public ReadContactDto(String lastName,
                           String firstName,
-                          String companyName,
+                          Company companyName,
                           String email,
                           String phoneNumber,
                           String comment,
@@ -25,7 +26,7 @@ public class ReadContactDto {
                           LocalDateTime lastModification) {
         this.lastName = lastName;
         this.firstName = firstName;
-        CompanyName = companyName;
+        this.companyName = companyName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.comment = comment;
@@ -49,12 +50,12 @@ public class ReadContactDto {
         this.firstName = firstName;
     }
 
-    public String getCompanyName() {
-        return CompanyName;
+    public Company getCompanyName() {
+        return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+    public void setCompanyName(Company companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {
@@ -101,7 +102,7 @@ public class ReadContactDto {
     public ReadContactDto(Contact contact){
         this(contact.getLastName(),
                 contact.getFirstName(),
-                contact.getCompany().getName(),
+                contact.getCompany(),
                 contact.getEmail(),
                 contact.getPhoneNumber(),
                 contact.getComment(),

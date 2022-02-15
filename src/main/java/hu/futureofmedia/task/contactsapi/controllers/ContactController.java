@@ -1,6 +1,8 @@
 package hu.futureofmedia.task.contactsapi.controllers;
 
 import hu.futureofmedia.task.contactsapi.dtos.ListContactDto;
+import hu.futureofmedia.task.contactsapi.dtos.ReadContactDto;
+import hu.futureofmedia.task.contactsapi.dtos.RegContactDto;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import hu.futureofmedia.task.contactsapi.services.ContactService;
@@ -25,30 +27,30 @@ public class ContactController {
     }
 
     @GetMapping(path = "/contacts")
-    public ResponseEntity<List<Contact>> getActiveContacts(
+    public ResponseEntity<List<ListContactDto>> getActiveContacts(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "lastName") String sortBy) {
 
-        List<Contact> allActiveContactsList = contactService.ActiveContacts(pageNo, pageSize, sortBy);
+        List<ListContactDto> allActiveContactsList = contactService.ActiveContacts(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(allActiveContactsList, HttpStatus.OK);
     }
 
     @GetMapping(path = "/contacts/{lastname}")
-    public ResponseEntity<Contact> getOneContact(@PathVariable(value = "lastname") String lastName) {
+    public ResponseEntity<ReadContactDto> getOneContact(@PathVariable(value = "lastname") String lastName) {
         return new ResponseEntity<>(contactService.getOneContact(lastName), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/contacts/{lastname}")
-    public ResponseEntity<Contact> deleteOneContact(@PathVariable(value = "lastname") String lastName) {
+    public ResponseEntity<ReadContactDto> deleteOneContact(@PathVariable(value = "lastname") String lastName) {
         return new ResponseEntity<>(contactService.deleteOneContact(lastName), HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> contactRegistration(@Valid @RequestBody Contact contact) {
+    public ResponseEntity<String> contactRegistration(@Valid @RequestBody RegContactDto contact) {
         try {
             contactService.registerContact(contact);
-            return new ResponseEntity<>("Contact added", HttpStatus.OK);
+            return new ResponseEntity<>("Contact added", HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>("not valid", HttpStatus.BAD_REQUEST);
         }
@@ -57,21 +59,13 @@ public class ContactController {
     @PutMapping("/contacts/{lastname}")
     public ResponseEntity<String> updateContact(
             @PathVariable(value = "lastname") String lastName,
-            @Valid @RequestBody Contact contactDetails) {
-        Contact contact = contactService.getOneContact(lastName);
+            @Valid @RequestBody RegContactDto contactDetails) {
 
         try {
-            contact.setLastName(contactDetails.getLastName());
-            contact.setFirstName(contactDetails.getFirstName());
-            contact.setCompany(contactDetails.getCompany());
-            contact.setEmail(contactDetails.getEmail());
-            contact.setPhoneNumber(contactDetails.getPhoneNumber());
-            contact.setComment(contactDetails.getComment());
-
-            contactRepository.save(contact);
+            contactService.updateContact(contactDetails, lastName);
             return new ResponseEntity<>("Contact modified", HttpStatus.OK);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             return new ResponseEntity<>("not valid", HttpStatus.BAD_REQUEST);
         }
     }

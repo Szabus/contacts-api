@@ -1,23 +1,24 @@
 package hu.futureofmedia.task.contactsapi.dtos;
 
+import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 
 public class ListContactDto {
 
     private String lastName;
     private String firstName;
-    private String CompanyName;
+    private Company companyName;
     private String email;
     private String phoneNumber;
 
     public ListContactDto(String lastName,
                           String firstName,
-                          String companyName,
+                          Company companyName,
                           String email,
                           String phoneNumber) {
         this.lastName = lastName;
         this.firstName = firstName;
-        CompanyName = companyName;
+        this.companyName = companyName;
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
@@ -38,12 +39,12 @@ public class ListContactDto {
         this.firstName = firstName;
     }
 
-    public String getCompanyName() {
-        return CompanyName;
+    public Company getCompanyName() {
+        return companyName;
     }
 
-    public void setCompanyName(String companyName) {
-        CompanyName = companyName;
+    public void setCompanyName(Company companyName) {
+        this.companyName = companyName;
     }
 
     public String getEmail() {
@@ -65,7 +66,7 @@ public class ListContactDto {
     public ListContactDto(Contact contact) {
         this(contact.getLastName(),
                 contact.getFirstName(),
-                contact.getCompany().getName(),
+                contact.getCompany(),
                 contact.getEmail(),
                 contact.getPhoneNumber());
     }

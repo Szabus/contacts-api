@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.entities;
 
+import hu.futureofmedia.task.contactsapi.dtos.RegContactDto;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -61,6 +62,24 @@ public class Contact {
         this.state = state;
         this.regTime = regTime;
         this.lastModification = lastModification;
+    }
+
+    public Contact(String lastName, String firstName, String email, String phoneNumber, Company company, String comment) {
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.company = company;
+        this.comment = comment;
+    }
+
+    public Contact(RegContactDto regContactDto) {
+        this(regContactDto.getLastName(),
+                regContactDto.getFirstName(),
+                regContactDto.getEmail(),
+                regContactDto.getPhoneNumber(),
+                regContactDto.getCompanyName(),
+                regContactDto.getComment());
     }
 
     public Long getId() {
