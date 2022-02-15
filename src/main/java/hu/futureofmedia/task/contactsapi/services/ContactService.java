@@ -75,6 +75,7 @@ public class ContactService {
     public void updateContact(RegContactDto contactDto, String lastName) {
 
         Contact contact = CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
+
         if (isPhoneNumberValid(contactDto.getPhoneNumber())) {
 
             contact.setLastName(contactDto.getLastName());
@@ -91,12 +92,10 @@ public class ContactService {
     private boolean isPhoneNumberValid(String phone) {
 
         PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
-
         Phonenumber.PhoneNumber phoneNumber = null;
 
         try {
             phoneNumber = phoneUtil.parse(phone, "HUN");
-
 
             System.out.println(
                     "\nType: "
