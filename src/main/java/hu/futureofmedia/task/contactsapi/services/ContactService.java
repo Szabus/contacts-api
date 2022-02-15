@@ -1,5 +1,8 @@
 package hu.futureofmedia.task.contactsapi.services;
 
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
+import com.google.i18n.phonenumbers.Phonenumber;
 import hu.futureofmedia.task.contactsapi.dtos.ListContactDto;
 import hu.futureofmedia.task.contactsapi.dtos.ReadContactDto;
 import hu.futureofmedia.task.contactsapi.dtos.RegContactDto;
@@ -62,21 +65,49 @@ public class ContactService {
 
     public void registerContact(RegContactDto contactDto) {
 
-        Contact contact = new Contact(contactDto);
-        contact.setState(State.ACTIVE);
-        CONTACT_REPOSITORY.save(contact);
+        if (isPhoneNumberValid(contactDto.getPhoneNumber())) {
+            Contact contact = new Contact(contactDto);
+            contact.setState(State.ACTIVE);
+            CONTACT_REPOSITORY.save(contact);
+        }
     }
 
     public void updateContact(RegContactDto contactDto, String lastName) {
 
         Contact contact = CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
-        contact.setLastName(contactDto.getLastName());
-        contact.setFirstName(contactDto.getFirstName());
-        contact.setCompany(contactDto.getCompanyName());
-        contact.setEmail(contactDto.getEmail());
-        contact.setPhoneNumber(contactDto.getPhoneNumber());
-        contact.setComment(contactDto.getComment());
 
-        CONTACT_REPOSITORY.save(contact);
+        if (isPhoneNumberValid(contactDto.getPhoneNumber())) {
+
+            contact.setLastName(contactDto.getLastName());
+            contact.setFirstName(contactDto.getFirstName());
+            contact.setCompany(contactDto.getCompanyName());
+            contact.setEmail(contactDto.getEmail());
+            contact.setPhoneNumber(contactDto.getPhoneNumber());
+            contact.setComment(contactDto.getComment());
+
+            CONTACT_REPOSITORY.save(contact);
+        }
+    }
+
+    private boolean isPhoneNumberValid(String phone) {
+
+        PhoneNumberUtil phoneUtil = PhoneNumberUtil.getInstance();
+        Phonenumber.PhoneNumber phoneNumber = null;
+
+        try {
+            phoneNumber = phoneUtil.parse(phone, "HUN");
+
+            System.out.println(
+                    "\nType: "
+                            + phoneUtil.getNumberType(phoneNumber));
+        } catch (NumberParseException e) {
+
+            System.out.println(
+                    "Unable to parse the given phone number: "
+                            + phone);
+            e.printStackTrace();
+        }
+
+        return phoneUtil.isValidNumber(phoneNumber);
     }
 }
