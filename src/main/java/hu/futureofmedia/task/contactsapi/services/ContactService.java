@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.services;
 
+import hu.futureofmedia.task.contactsapi.dtos.ListContactDto;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.entities.State;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
@@ -38,20 +39,21 @@ public class ContactService {
     }
 
     @Transactional
-    public Contact getOneContact(String lastName){
-        try{
+    public Contact getOneContact(String lastName) {
+        try {
             return CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
+
     @Transactional
-    public Contact deleteOneContact(String lastName){
-        try{
+    public Contact deleteOneContact(String lastName) {
+        try {
             Contact contact = CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
             contact.setState(State.DELETED);
             return contact;
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }

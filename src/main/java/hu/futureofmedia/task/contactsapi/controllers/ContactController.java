@@ -1,5 +1,6 @@
 package hu.futureofmedia.task.contactsapi.controllers;
 
+import hu.futureofmedia.task.contactsapi.dtos.ListContactDto;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import hu.futureofmedia.task.contactsapi.services.ContactService;
