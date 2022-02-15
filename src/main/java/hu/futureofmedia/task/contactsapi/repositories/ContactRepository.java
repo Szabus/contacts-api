@@ -10,5 +10,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ContactRepository extends PagingAndSortingRepository<Contact, Long> {
     Page<Contact> findAllByState(State state, Pageable pageable);
+
     Contact findAllByLastNameEquals(String lastName);
+
 }

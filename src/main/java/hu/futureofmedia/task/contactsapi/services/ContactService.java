@@ -46,6 +46,7 @@ public class ContactService {
     }
 
     public ReadContactDto getOneContact(String lastName) {
+
         try {
             return new ReadContactDto(CONTACT_REPOSITORY.findAllByLastNameEquals(lastName));
         } catch (Exception e) {
@@ -53,14 +54,10 @@ public class ContactService {
         }
     }
 
-    public ReadContactDto deleteOneContact(String lastName) {
-        try {
-            Contact contact = CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
-            contact.setState(State.DELETED);
-            return new ReadContactDto(contact);
-        } catch (Exception e) {
-            return null;
-        }
+    public void deleteOneContact(String lastName) {
+        Contact contact = CONTACT_REPOSITORY.findAllByLastNameEquals(lastName);
+        contact.setState(State.DELETED);
+        new ReadContactDto(contact);
     }
 
     public void registerContact(RegContactDto contactDto) {

@@ -9,7 +9,7 @@ public class ReadContactDto {
 
     private String lastName;
     private String firstName;
-    private Company companyName;
+    private Company company;
     private String email;
     private String phoneNumber;
     private String comment;
@@ -18,7 +18,7 @@ public class ReadContactDto {
 
     public ReadContactDto(String lastName,
                           String firstName,
-                          Company companyName,
+                          Company company,
                           String email,
                           String phoneNumber,
                           String comment,
@@ -26,7 +26,7 @@ public class ReadContactDto {
                           LocalDateTime lastModification) {
         this.lastName = lastName;
         this.firstName = firstName;
-        this.companyName = companyName;
+        this.company = company;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.comment = comment;
@@ -50,12 +50,12 @@ public class ReadContactDto {
         this.firstName = firstName;
     }
 
-    public Company getCompanyName() {
-        return companyName;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyName(Company companyName) {
-        this.companyName = companyName;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public String getEmail() {
@@ -99,7 +99,7 @@ public class ReadContactDto {
     }
 
 
-    public ReadContactDto(Contact contact){
+    public ReadContactDto(Contact contact) {
         this(contact.getLastName(),
                 contact.getFirstName(),
                 contact.getCompany(),

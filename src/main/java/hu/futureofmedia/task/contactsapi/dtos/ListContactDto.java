@@ -3,6 +3,7 @@ package hu.futureofmedia.task.contactsapi.dtos;
 import hu.futureofmedia.task.contactsapi.entities.Company;
 import hu.futureofmedia.task.contactsapi.entities.Contact;
 
+
 public class ListContactDto {
 
     private String lastName;

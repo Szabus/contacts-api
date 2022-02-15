@@ -3,18 +3,19 @@ package hu.futureofmedia.task.contactsapi.controllers;
 import hu.futureofmedia.task.contactsapi.dtos.ListContactDto;
 import hu.futureofmedia.task.contactsapi.dtos.ReadContactDto;
 import hu.futureofmedia.task.contactsapi.dtos.RegContactDto;
-import hu.futureofmedia.task.contactsapi.entities.Contact;
 import hu.futureofmedia.task.contactsapi.repositories.ContactRepository;
 import hu.futureofmedia.task.contactsapi.services.ContactService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Validated
 public class ContactController {
 
     ContactRepository contactRepository;
@@ -32,7 +33,8 @@ public class ContactController {
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "lastName") String sortBy) {
 
-        List<ListContactDto> allActiveContactsList = contactService.ActiveContacts(pageNo, pageSize, sortBy);
+        List<ListContactDto> allActiveContactsList;
+        allActiveContactsList = contactService.ActiveContacts(pageNo, pageSize, sortBy);
         return new ResponseEntity<>(allActiveContactsList, HttpStatus.OK);
     }
 
@@ -42,8 +44,9 @@ public class ContactController {
     }
 
     @DeleteMapping(path = "/contacts/{lastname}")
-    public ResponseEntity<ReadContactDto> deleteOneContact(@PathVariable(value = "lastname") String lastName) {
-        return new ResponseEntity<>(contactService.deleteOneContact(lastName), HttpStatus.OK);
+    public ResponseEntity<String> deleteOneContact(@PathVariable(value = "lastname") String lastName) {
+        contactService.deleteOneContact(lastName);
+        return new ResponseEntity<>("Contact has been deleted", HttpStatus.OK);
     }
 
     @PostMapping("/register")
